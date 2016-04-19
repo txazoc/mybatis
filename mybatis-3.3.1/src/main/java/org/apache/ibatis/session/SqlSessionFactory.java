@@ -22,8 +22,11 @@ import java.sql.Connection;
  * 
  * @author Clinton Begin
  */
+
+// 源码解析: SqlSession工厂, 根据Connection或DataSource创建SqlSesion
 public interface SqlSessionFactory {
 
+  // 源码解析: openSession重载方法, 从SqlSession工厂获取一个SqlSession
   SqlSession openSession();
 
   SqlSession openSession(boolean autoCommit);
@@ -35,6 +38,7 @@ public interface SqlSessionFactory {
   SqlSession openSession(ExecutorType execType, TransactionIsolationLevel level);
   SqlSession openSession(ExecutorType execType, Connection connection);
 
+  // 源码解析: 返回Configuration对象
   Configuration getConfiguration();
 
 }

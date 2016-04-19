@@ -20,9 +20,12 @@ import org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: 连接池的数据源工厂
 public class PooledDataSourceFactory extends UnpooledDataSourceFactory {
 
   public PooledDataSourceFactory() {
+    // 源码解析: 数据源设置为PooledDataSource
     this.dataSource = new PooledDataSource();
   }
 

@@ -32,6 +32,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 /**
  * @author Clinton Begin
  */
+// 源码解析: SqlSessionFactory构建器
 public class SqlSessionFactoryBuilder {
 
   public SqlSessionFactory build(Reader reader) {
@@ -74,6 +75,7 @@ public class SqlSessionFactoryBuilder {
     return build(inputStream, null, properties);
   }
 
+  // 源码解析: build方法重载
   public SqlSessionFactory build(InputStream inputStream, String environment, Properties properties) {
     try {
       XMLConfigBuilder parser = new XMLConfigBuilder(inputStream, environment, properties);
@@ -89,7 +91,8 @@ public class SqlSessionFactoryBuilder {
       }
     }
   }
-    
+
+  // 源码解析: 返回DefaultSqlSessionFactory
   public SqlSessionFactory build(Configuration config) {
     return new DefaultSqlSessionFactory(config);
   }

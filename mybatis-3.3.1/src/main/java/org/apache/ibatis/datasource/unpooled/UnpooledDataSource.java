@@ -35,18 +35,26 @@ import org.apache.ibatis.io.Resources;
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
+
+// 源码解析: 非连接池的数据源
 public class UnpooledDataSource implements DataSource {
   
   private ClassLoader driverClassLoader;
   private Properties driverProperties;
   private static Map<String, Driver> registeredDrivers = new ConcurrentHashMap<String, Driver>();
 
+  // 源码解析: 数据库驱动
   private String driver;
+  // 源码解析: 数据库连接url
   private String url;
+  // 源码解析: 用户名
   private String username;
+  // 源码解析: 密码
   private String password;
 
+  // 源码解析: 是否自动提交
   private Boolean autoCommit;
+  // 源码解析: 默认的事务隔离级别
   private Integer defaultTransactionIsolationLevel;
 
   static {

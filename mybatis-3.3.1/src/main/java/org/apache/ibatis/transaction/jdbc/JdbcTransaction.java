@@ -37,13 +37,19 @@ import org.apache.ibatis.transaction.TransactionException;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: JDBC事务
 public class JdbcTransaction implements Transaction {
 
   private static final Log log = LogFactory.getLog(JdbcTransaction.class);
 
+  // 源码解析: 数据库连接
   protected Connection connection;
+  // 源码解析: 数据源
   protected DataSource dataSource;
+  // 源码解析: 事务隔离级别
   protected TransactionIsolationLevel level;
+  // 源码解析: 是否自动提交
   protected boolean autoCommmit;
 
   public JdbcTransaction(DataSource ds, TransactionIsolationLevel desiredLevel, boolean desiredAutoCommit) {
@@ -59,6 +65,7 @@ public class JdbcTransaction implements Transaction {
   @Override
   public Connection getConnection() throws SQLException {
     if (connection == null) {
+      // 源码解析: connection不存在, 从dataSource获取一个连接
       openConnection();
     }
     return connection;
@@ -66,6 +73,7 @@ public class JdbcTransaction implements Transaction {
 
   @Override
   public void commit() throws SQLException {
+    // 源码解析: connection存在且没设置自动提交, 则提交
     if (connection != null && !connection.getAutoCommit()) {
       if (log.isDebugEnabled()) {
         log.debug("Committing JDBC Connection [" + connection + "]");
@@ -76,6 +84,7 @@ public class JdbcTransaction implements Transaction {
 
   @Override
   public void rollback() throws SQLException {
+    // 源码解析: connection存在且没设置自动提交, 则回滚
     if (connection != null && !connection.getAutoCommit()) {
       if (log.isDebugEnabled()) {
         log.debug("Rolling back JDBC Connection [" + connection + "]");
@@ -87,10 +96,12 @@ public class JdbcTransaction implements Transaction {
   @Override
   public void close() throws SQLException {
     if (connection != null) {
+      // 源码解析: 关闭连接前, 重置autoCommmit
       resetAutoCommit();
       if (log.isDebugEnabled()) {
         log.debug("Closing JDBC Connection [" + connection + "]");
       }
+      // 源码解析: 关闭连接
       connection.close();
     }
   }

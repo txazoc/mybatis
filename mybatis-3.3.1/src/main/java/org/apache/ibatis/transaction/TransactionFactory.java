@@ -27,6 +27,8 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
  *
  * @author Clinton Begin
  */
+
+// 源码解析: 事务工厂
 public interface TransactionFactory {
 
   /**
@@ -41,6 +43,8 @@ public interface TransactionFactory {
    * @return Transaction
    * @since 3.1.0
    */
+
+  // 源码解析: 根据Connection新建一个事务
   Transaction newTransaction(Connection conn);
   
   /**
@@ -51,6 +55,8 @@ public interface TransactionFactory {
    * @return Transaction
    * @since 3.1.0
    */
+
+  // 源码解析: 根据DataSource新建一个事务
   Transaction newTransaction(DataSource dataSource, TransactionIsolationLevel level, boolean autoCommit);
 
 }

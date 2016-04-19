@@ -32,6 +32,7 @@ import org.apache.ibatis.transaction.TransactionFactory;
 /**
  * @author Clinton Begin
  */
+// 源码解析: Managed事务工厂
 public class ManagedTransactionFactory implements TransactionFactory {
 
   private boolean closeConnection = true;
@@ -48,6 +49,7 @@ public class ManagedTransactionFactory implements TransactionFactory {
 
   @Override
   public Transaction newTransaction(Connection conn) {
+    // 源码解析: 返回ManagedTransaction
     return new ManagedTransaction(conn, closeConnection);
   }
 
@@ -56,6 +58,8 @@ public class ManagedTransactionFactory implements TransactionFactory {
     // Silently ignores autocommit and isolation level, as managed transactions are entirely
     // controlled by an external manager.  It's silently ignored so that
     // code remains portable between managed and unmanaged configurations.
+
+    // 源码解析: 返回ManagedTransaction
     return new ManagedTransaction(ds, level, closeConnection);
   }
 }

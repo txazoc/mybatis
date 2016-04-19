@@ -20,6 +20,22 @@ import java.sql.Connection;
 /**
  * @author Clinton Begin
  */
+
+/**
+ * 源码解析: 事务隔离级别
+ *
+ * NONE: 不支持事务
+ * READ_UNCOMMITTED: 允许脏读、不可重复读、幻读
+ * READ_COMMITTED: 不允许脏读, 允许不可重复读、幻读
+ * REPEATABLE_READ: 不允许脏读、不可重复读, 允许幻读
+ * SERIALIZABLE: 不允许脏读、不可重复读、幻读
+ *
+ * 数据库并发带来的问题
+ *
+ * 1. 脏读
+ * 2. 不可重复读
+ * 3. 幻读
+ */
 public enum TransactionIsolationLevel {
   NONE(Connection.TRANSACTION_NONE),
   READ_COMMITTED(Connection.TRANSACTION_READ_COMMITTED),

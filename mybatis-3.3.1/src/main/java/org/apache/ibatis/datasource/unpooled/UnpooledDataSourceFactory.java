@@ -27,14 +27,20 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: 非连接池的数据源工厂
 public class UnpooledDataSourceFactory implements DataSourceFactory {
 
+  // 源码解析: 数据库驱动属性前缀
   private static final String DRIVER_PROPERTY_PREFIX = "driver.";
+  // 源码解析: 数据库驱动属性前缀长度
   private static final int DRIVER_PROPERTY_PREFIX_LENGTH = DRIVER_PROPERTY_PREFIX.length();
 
+  // 源码解析: 数据源
   protected DataSource dataSource;
 
   public UnpooledDataSourceFactory() {
+    // 源码解析: 数据源设置为UnpooledDataSource
     this.dataSource = new UnpooledDataSource();
   }
 

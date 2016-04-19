@@ -29,12 +29,15 @@ import org.apache.ibatis.datasource.DataSourceFactory;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: Jndi数据源工厂
 public class JndiDataSourceFactory implements DataSourceFactory {
 
   public static final String INITIAL_CONTEXT = "initial_context";
   public static final String DATA_SOURCE = "data_source";
   public static final String ENV_PREFIX = "env.";
 
+  // 源码解析: 数据源
   private DataSource dataSource;
 
   @Override
@@ -42,6 +45,7 @@ public class JndiDataSourceFactory implements DataSourceFactory {
     try {
       InitialContext initCtx = null;
       Properties env = getEnvProperties(properties);
+      // 源码解析: 初始化InitialContext
       if (env == null) {
         initCtx = new InitialContext();
       } else {
@@ -51,8 +55,10 @@ public class JndiDataSourceFactory implements DataSourceFactory {
       if (properties.containsKey(INITIAL_CONTEXT)
           && properties.containsKey(DATA_SOURCE)) {
         Context ctx = (Context) initCtx.lookup(properties.getProperty(INITIAL_CONTEXT));
+        // 源码解析: 查找数据源
         dataSource = (DataSource) ctx.lookup(properties.getProperty(DATA_SOURCE));
       } else if (properties.containsKey(DATA_SOURCE)) {
+        // 源码解析: 查找数据源
         dataSource = (DataSource) initCtx.lookup(properties.getProperty(DATA_SOURCE));
       }
 
@@ -66,6 +72,7 @@ public class JndiDataSourceFactory implements DataSourceFactory {
     return dataSource;
   }
 
+  // 源码解析: 过滤Properties, 保留key以env.开头的key-value属性
   private static Properties getEnvProperties(Properties allProps) {
     final String PREFIX = ENV_PREFIX;
     Properties contextProperties = null;
@@ -76,6 +83,7 @@ public class JndiDataSourceFactory implements DataSourceFactory {
         if (contextProperties == null) {
           contextProperties = new Properties();
         }
+        // 源码解析: 截去key前面的env.
         contextProperties.put(key.substring(PREFIX.length()), value);
       }
     }

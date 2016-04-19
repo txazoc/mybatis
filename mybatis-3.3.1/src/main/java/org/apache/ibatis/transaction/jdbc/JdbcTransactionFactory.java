@@ -32,6 +32,7 @@ import org.apache.ibatis.transaction.TransactionFactory;
 /**
  * @author Clinton Begin
  */
+// 源码解析: JDBC事务工厂
 public class JdbcTransactionFactory implements TransactionFactory {
 
   @Override
@@ -40,11 +41,13 @@ public class JdbcTransactionFactory implements TransactionFactory {
 
   @Override
   public Transaction newTransaction(Connection conn) {
+    // 源码解析: 返回JdbcTransaction
     return new JdbcTransaction(conn);
   }
 
   @Override
   public Transaction newTransaction(DataSource ds, TransactionIsolationLevel level, boolean autoCommit) {
+    // 源码解析: 返回JdbcTransaction
     return new JdbcTransaction(ds, level, autoCommit);
   }
 }

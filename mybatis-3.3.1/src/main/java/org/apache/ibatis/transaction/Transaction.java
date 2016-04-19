@@ -24,6 +24,8 @@ import java.sql.SQLException;
  *
  * @author Clinton Begin
  */
+
+// 源码解析: 事务
 public interface Transaction {
 
   /**
@@ -31,24 +33,32 @@ public interface Transaction {
    * @return DataBase connection
    * @throws SQLException
    */
+
+  // 源码解析: 获取数据库连接
   Connection getConnection() throws SQLException;
 
   /**
    * Commit inner database connection.
    * @throws SQLException
    */
+
+  // 源码解析: 提交事务
   void commit() throws SQLException;
 
   /**
    * Rollback inner database connection.
    * @throws SQLException
    */
+
+  // 源码解析: 回滚事务
   void rollback() throws SQLException;
 
   /**
    * Close inner database connection.
    * @throws SQLException
    */
+
+  // 源码解析: 关闭事务
   void close() throws SQLException;
 
 }
