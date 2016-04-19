@@ -58,6 +58,7 @@ public class UnpooledDataSource implements DataSource {
   private Integer defaultTransactionIsolationLevel;
 
   static {
+    // 源码解析: 获取已加载的JDBC驱动
     Enumeration<Driver> drivers = DriverManager.getDrivers();
     while (drivers.hasMoreElements()) {
       Driver driver = drivers.nextElement();
@@ -205,8 +206,11 @@ public class UnpooledDataSource implements DataSource {
   }
 
   private Connection doGetConnection(Properties properties) throws SQLException {
+    // 源码解析: 初始化驱动
     initializeDriver();
+    // 源码解析: 获取数据库连接
     Connection connection = DriverManager.getConnection(url, properties);
+    // 源码解析: 配置数据库连接, 设置autoCommit和事务隔离级别
     configureConnection(connection);
     return connection;
   }
@@ -240,6 +244,7 @@ public class UnpooledDataSource implements DataSource {
     }
   }
 
+  // 源码解析: 数据库驱动代理
   private static class DriverProxy implements Driver {
     private Driver driver;
 

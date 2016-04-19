@@ -32,13 +32,16 @@ import org.apache.ibatis.transaction.TransactionFactory;
 /**
  * @author Clinton Begin
  */
+
 // 源码解析: Managed事务工厂
 public class ManagedTransactionFactory implements TransactionFactory {
 
+  // 源码解析: 是否关闭连接
   private boolean closeConnection = true;
 
   @Override
   public void setProperties(Properties props) {
+    // 源码解析: 读取Properties, 设置closeConnection
     if (props != null) {
       String closeConnectionProperty = props.getProperty("closeConnection");
       if (closeConnectionProperty != null) {

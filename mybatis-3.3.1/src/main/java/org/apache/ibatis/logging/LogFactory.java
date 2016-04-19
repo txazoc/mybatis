@@ -21,6 +21,8 @@ import java.lang.reflect.Constructor;
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
+
+// 源码解析: 日志工厂
 public final class LogFactory {
 
   /**
@@ -31,36 +33,47 @@ public final class LogFactory {
   private static Constructor<? extends Log> logConstructor;
 
   static {
+    // 源码解析: Slf4j日志
     tryImplementation(new Runnable() {
       @Override
       public void run() {
         useSlf4jLogging();
       }
     });
+
+    // 源码解析: Commons Logging日志
     tryImplementation(new Runnable() {
       @Override
       public void run() {
         useCommonsLogging();
       }
     });
+
+    // 源码解析: Log4J2日志
     tryImplementation(new Runnable() {
       @Override
       public void run() {
         useLog4J2Logging();
       }
     });
+
+    // 源码解析: Log4J日志
     tryImplementation(new Runnable() {
       @Override
       public void run() {
         useLog4JLogging();
       }
     });
+
+    // 源码解析: Jdk Logging日志
     tryImplementation(new Runnable() {
       @Override
       public void run() {
         useJdkLogging();
       }
     });
+
+    // 源码解析: 自定义日志
     tryImplementation(new Runnable() {
       @Override
       public void run() {

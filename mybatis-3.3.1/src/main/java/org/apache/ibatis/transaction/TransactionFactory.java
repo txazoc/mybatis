@@ -35,6 +35,8 @@ public interface TransactionFactory {
    * Sets transaction factory custom properties.
    * @param props
    */
+
+  // 源码解析: 设置Properties
   void setProperties(Properties props);
 
   /**

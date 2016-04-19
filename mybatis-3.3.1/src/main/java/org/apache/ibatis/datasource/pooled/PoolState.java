@@ -21,6 +21,8 @@ import java.util.List;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: 连接池状态
 public class PoolState {
 
   protected PooledDataSource dataSource;

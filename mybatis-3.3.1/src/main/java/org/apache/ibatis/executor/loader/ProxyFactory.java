@@ -24,10 +24,14 @@ import org.apache.ibatis.session.Configuration;
 /**
  * @author Eduardo Macarron
  */
+
+// 源码解析: 代理工厂
 public interface ProxyFactory {
 
+  // 源码解析: 设置Properties
   void setProperties(Properties properties);
 
+  // 源码解析: 创建代理
   Object createProxy(Object target, ResultLoaderMap lazyLoader, Configuration configuration, ObjectFactory objectFactory, List<Class<?>> constructorArgTypes, List<Object> constructorArgs);
   
 }

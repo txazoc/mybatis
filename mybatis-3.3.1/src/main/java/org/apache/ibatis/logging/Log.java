@@ -18,6 +18,12 @@ package org.apache.ibatis.logging;
 /**
  * @author Clinton Begin
  */
+
+/**
+ * 源码解析: 日志
+ *
+ * 日志级别: error debug trace warn
+ */
 public interface Log {
 
   boolean isDebugEnabled();

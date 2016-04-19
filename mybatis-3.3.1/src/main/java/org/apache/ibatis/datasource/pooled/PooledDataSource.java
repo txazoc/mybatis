@@ -37,18 +37,27 @@ import org.apache.ibatis.logging.LogFactory;
  *
  * @author Clinton Begin
  */
+
+// 源码解析: MyBatis自定义实现的连接池的数据源
 public class PooledDataSource implements DataSource {
 
   private static final Log log = LogFactory.getLog(PooledDataSource.class);
 
+  // 源码解析: 连接池状态
   private final PoolState state = new PoolState(this);
 
+  // 源码解析: 非连接池的数据源
   private final UnpooledDataSource dataSource;
 
   // OPTIONAL CONFIGURATION FIELDS
+
+  // 源码解析: 连接池最大活动连接数
   protected int poolMaximumActiveConnections = 10;
+  // 源码解析: 连接池最大空闲连接数
   protected int poolMaximumIdleConnections = 5;
+  // 源码解析: 连接池最大空闲连接数
   protected int poolMaximumCheckoutTime = 20000;
+  // 源码解析: 连接池等待时间
   protected int poolTimeToWait = 20000;
   protected String poolPingQuery = "NO PING QUERY SET";
   protected boolean poolPingEnabled = false;
@@ -57,6 +66,7 @@ public class PooledDataSource implements DataSource {
   private int expectedConnectionTypeCode;
 
   public PooledDataSource() {
+    // 源码解析: 依赖于UnpooledDataSource新建数据库连接
     dataSource = new UnpooledDataSource();
   }
 
@@ -374,27 +384,33 @@ public class PooledDataSource implements DataSource {
       synchronized (state) {
         if (!state.idleConnections.isEmpty()) {
           // Pool has available connection
+          // 源码解析: 有空闲连接, pop一个空闲连接
           conn = state.idleConnections.remove(0);
           if (log.isDebugEnabled()) {
             log.debug("Checked out connection " + conn.getRealHashCode() + " from pool.");
           }
         } else {
           // Pool does not have available connection
+          // 源码解析: 没有空闲连接
           if (state.activeConnections.size() < poolMaximumActiveConnections) {
             // Can create new connection
+            // 活动连接数小于最大活动连接数, 新建一个数据库连接
             conn = new PooledConnection(dataSource.getConnection(), this);
             if (log.isDebugEnabled()) {
               log.debug("Created connection " + conn.getRealHashCode() + ".");
             }
           } else {
             // Cannot create new connection
+            // 已达到最大活动连接数, 不能新建数据库连接
             PooledConnection oldestActiveConnection = state.activeConnections.get(0);
             long longestCheckoutTime = oldestActiveConnection.getCheckoutTime();
+            // 检查活动时间最长的连接是否超时
             if (longestCheckoutTime > poolMaximumCheckoutTime) {
               // Can claim overdue connection
               state.claimedOverdueConnectionCount++;
               state.accumulatedCheckoutTimeOfOverdueConnections += longestCheckoutTime;
               state.accumulatedCheckoutTime += longestCheckoutTime;
+              // 活动连接超时, 重新分配
               state.activeConnections.remove(oldestActiveConnection);
               if (!oldestActiveConnection.getRealConnection().getAutoCommit()) {
                 oldestActiveConnection.getRealConnection().rollback();
@@ -406,6 +422,7 @@ public class PooledDataSource implements DataSource {
               }
             } else {
               // Must wait
+              // 到这里, 只能等待
               try {
                 if (!countedWait) {
                   state.hadToWaitCount++;
