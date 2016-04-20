@@ -6,9 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ElementType.METHOD})
 public @interface MyBatis {
 
-    String xml() default "mybatis.xml";
+    String resource() default "mybatis.xml";
+
+    boolean openSession() default true;
 
 }
