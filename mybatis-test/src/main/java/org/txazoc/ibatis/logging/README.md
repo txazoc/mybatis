@@ -55,7 +55,11 @@ static {
 
 清楚MyBatis的日志实现原理后，事情就变得简单了。如果要在MyBatis中使用某一种日志组件，引入相应的jar包，然后添加配置文件就可以了。如果同时使用了多种日志组件，会按照Slf4j、Commons Logging、Log4J2、Log4J的优先级来进行加载。如果没有引入任何日志组件，默认会使用Jdk Logging。
 
-上面是MyBatis提供的自动日志加载功能，MyBatis还提供了配置的方式指定日志组件。在MyBatis的XMLConfigBuilder的settingsElement()方法中有这么一段代码，```configuration.setLogImpl(resolveClass(props.getProperty("logImpl")));```，这段代码实现的功能是指定新的日志组件。
+上面是MyBatis提供的自动日志加载功能，MyBatis还提供了配置的方式指定日志组件。在MyBatis的XMLConfigBuilder的settingsElement()方法中有下面这段代码，这段代码实现的功能是指定新的日志组件。
+
+```java
+configuration.setLogImpl(resolveClass(props.getProperty("logImpl")));
+```
 
 这样，我们就可以在配置文件中直接指定使用哪一种日志组件了。
 
