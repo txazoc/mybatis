@@ -18,6 +18,8 @@ package org.apache.ibatis.exceptions;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: 太多的结果集异常
 public class TooManyResultsException extends PersistenceException {
 
   private static final long serialVersionUID = 8935197089745865786L;

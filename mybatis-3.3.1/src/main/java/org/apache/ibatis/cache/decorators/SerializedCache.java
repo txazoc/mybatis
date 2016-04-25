@@ -32,6 +32,8 @@ import org.apache.ibatis.io.Resources;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: 序列化缓存, 要求value可序列化
 public class SerializedCache implements Cache {
 
   private Cache delegate;
@@ -53,8 +55,10 @@ public class SerializedCache implements Cache {
   @Override
   public void putObject(Object key, Object object) {
     if (object == null || object instanceof Serializable) {
+      // 源码解析: 对value进行序列化处理
       delegate.putObject(key, serialize((Serializable) object));
     } else {
+      // 源码解析: value不是可序列化对象, 抛出CacheException异常
       throw new CacheException("SharedCache failed to make a copy of a non-serializable object: " + object);
     }
   }
@@ -62,6 +66,7 @@ public class SerializedCache implements Cache {
   @Override
   public Object getObject(Object key) {
     Object object = delegate.getObject(key);
+    // 源码解析: 对value进行反序列化处理
     return object == null ? null : deserialize((byte[]) object);
   }
 
@@ -90,6 +95,7 @@ public class SerializedCache implements Cache {
     return delegate.equals(obj);
   }
 
+  // 源码解析: 序列化处理
   private byte[] serialize(Serializable value) {
     try {
       ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -103,6 +109,7 @@ public class SerializedCache implements Cache {
     }
   }
 
+  // 源码解析: 反序列化处理
   private Serializable deserialize(byte[] value) {
     Serializable result;
     try {

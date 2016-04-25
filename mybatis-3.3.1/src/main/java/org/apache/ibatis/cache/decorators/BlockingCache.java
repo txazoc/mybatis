@@ -34,6 +34,13 @@ import org.apache.ibatis.cache.CacheException;
  * @author Eduardo Macarron
  *
  */
+
+/**
+ * 简单的阻塞缓存
+ *
+ * 简单低效的EhCache阻塞缓存装饰器
+ * 当element在Cache中不存在时, 对key加锁, 其它线程wait直到element被填充, 避免访问数据库
+ */
 public class BlockingCache implements Cache {
 
   private long timeout;

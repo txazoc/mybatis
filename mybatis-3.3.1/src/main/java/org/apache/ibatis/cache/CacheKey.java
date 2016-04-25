@@ -23,6 +23,8 @@ import java.util.List;
 /**
  * @author Clinton Begin
  */
+
+// 缓存的key
 public class CacheKey implements Cloneable, Serializable {
 
   private static final long serialVersionUID = 1146682552656046210L;

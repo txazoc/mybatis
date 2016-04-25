@@ -22,6 +22,8 @@ import org.apache.ibatis.cache.Cache;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: 同步缓存, 基于synchronized实现
 public class SynchronizedCache implements Cache {
 
   private Cache delegate;

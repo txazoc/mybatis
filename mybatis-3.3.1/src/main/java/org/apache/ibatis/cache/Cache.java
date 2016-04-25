@@ -39,23 +39,30 @@ import java.util.concurrent.locks.ReadWriteLock;
  * @author Clinton Begin
  */
 
+// 源码解析: 缓存的接口, 每个namespace创建一个Cache的实例
 public interface Cache {
 
   /**
    * @return The identifier of this cache
    */
+
+  // 源码解析: Cache的标识, 值为namespace
   String getId();
 
   /**
    * @param key Can be any object but usually it is a {@link CacheKey}
    * @param value The result of a select.
    */
+
+  // 源码解析: key-value放入缓存
   void putObject(Object key, Object value);
 
   /**
    * @param key The key
    * @return The object stored in the cache.
    */
+
+  // 源码解析: 根据key从缓存种获取value
   Object getObject(Object key);
 
   /**
@@ -72,11 +79,15 @@ public interface Cache {
    * @param key The key
    * @return Not used
    */
+
+  // 源码解析: 3.3.0之后版本, 该方法被用来释放BlockingCache的锁
   Object removeObject(Object key);
 
   /**
    * Clears this cache instance
-   */  
+   */
+
+  // 源码解析: 清空缓存
   void clear();
 
   /**
@@ -84,6 +95,8 @@ public interface Cache {
    * 
    * @return The number of elements stored in the cache (not its capacity).
    */
+
+  // 源码解析: 缓存中存储的key-value数量
   int getSize();
   
   /** 
@@ -93,6 +106,8 @@ public interface Cache {
    * 
    * @return A ReadWriteLock 
    */
+
+  // 源码解析: 获取读写锁
   ReadWriteLock getReadWriteLock();
 
 }

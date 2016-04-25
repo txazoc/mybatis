@@ -25,10 +25,14 @@ import org.apache.ibatis.cache.CacheException;
 /**
  * @author Clinton Begin
  */
+
+// 源码解析: 永久缓存
 public class PerpetualCache implements Cache {
 
+  // 源码解析: 缓存标识, 值为namespace
   private String id;
 
+  // 源码解析: HashMap存放key-value
   private Map<Object, Object> cache = new HashMap<Object, Object>();
 
   public PerpetualCache(String id) {
