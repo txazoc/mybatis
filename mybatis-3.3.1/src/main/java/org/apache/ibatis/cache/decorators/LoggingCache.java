@@ -24,11 +24,16 @@ import org.apache.ibatis.logging.LogFactory;
 /**
  * @author Clinton Begin
  */
+
+//源码分析: 日志缓存
 public class LoggingCache implements Cache {
 
+  // 源码分析: 日志
   private Log log;  
   private Cache delegate;
+  // 源码分析: 缓存get数
   protected int requests = 0;
+  // 源码分析: 缓存命中数
   protected int hits = 0;
 
   public LoggingCache(Cache delegate) {
@@ -59,6 +64,7 @@ public class LoggingCache implements Cache {
       hits++;
     }
     if (log.isDebugEnabled()) {
+      // 源码分析: 日志记录缓存命中率
       log.debug("Cache Hit Ratio [" + getId() + "]: " + getHitRatio());
     }
     return value;

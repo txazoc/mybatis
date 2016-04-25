@@ -37,7 +37,11 @@ import org.apache.ibatis.logging.LogFactory;
  * @author Eduardo Macarron
  */
 
-// 源码解析: 事务缓存
+/**
+ * 二级事务缓存
+ *
+ *
+ */
 public class TransactionalCache implements Cache {
 
   private static final Log log = LogFactory.getLog(TransactionalCache.class);
@@ -45,6 +49,7 @@ public class TransactionalCache implements Cache {
   private Cache delegate;
   private boolean clearOnCommit;
   private Map<Object, Object> entriesToAddOnCommit;
+  // 源码分析: 缓存未命中的key集合
   private Set<Object> entriesMissedInCache;
 
   public TransactionalCache(Cache delegate) {

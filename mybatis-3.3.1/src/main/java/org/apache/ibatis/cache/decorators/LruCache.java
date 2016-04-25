@@ -26,10 +26,14 @@ import org.apache.ibatis.cache.Cache;
  *
  * @author Clinton Begin
  */
+
+// 源码分析: LRU(最近最少使用)缓存, 基于LinkedHashMap实现
 public class LruCache implements Cache {
 
   private final Cache delegate;
+  // 源码分析: key集合
   private Map<Object, Object> keyMap;
+  // 源码分析: 最老的key
   private Object eldestKey;
 
   public LruCache(Cache delegate) {
@@ -55,6 +59,7 @@ public class LruCache implements Cache {
       protected boolean removeEldestEntry(Map.Entry<Object, Object> eldest) {
         boolean tooBig = size() > size;
         if (tooBig) {
+          // 缓存的大小大于size=1024时, 获取最老的key, 后面进行删除处理
           eldestKey = eldest.getKey();
         }
         return tooBig;
@@ -93,6 +98,7 @@ public class LruCache implements Cache {
   private void cycleKeyList(Object key) {
     keyMap.put(key, key);
     if (eldestKey != null) {
+      // 源码分析: 最老的key存在, 则删除
       delegate.removeObject(eldestKey);
       eldestKey = null;
     }

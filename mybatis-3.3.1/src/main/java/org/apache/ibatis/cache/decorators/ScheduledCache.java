@@ -22,6 +22,8 @@ import org.apache.ibatis.cache.Cache;
 /**
  * @author Clinton Begin
  */
+
+// 源码分析: 缓存
 public class ScheduledCache implements Cache {
 
   private Cache delegate;

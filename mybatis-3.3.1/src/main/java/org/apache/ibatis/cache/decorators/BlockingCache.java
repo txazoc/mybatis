@@ -43,8 +43,10 @@ import org.apache.ibatis.cache.CacheException;
  */
 public class BlockingCache implements Cache {
 
+  // 源码分析: 获取value的超时时间
   private long timeout;
   private final Cache delegate;
+  // 源码分析: 锁集合, 每个key对应一个锁
   private final ConcurrentHashMap<Object, ReentrantLock> locks;
 
   public BlockingCache(Cache delegate) {
@@ -67,23 +69,28 @@ public class BlockingCache implements Cache {
     try {
       delegate.putObject(key, value);
     } finally {
+      // 源码分析: 释放锁
       releaseLock(key);
     }
   }
 
   @Override
   public Object getObject(Object key) {
+    // 源码分析: 加锁
     acquireLock(key);
     Object value = delegate.getObject(key);
     if (value != null) {
+      // 源码分析: 释放锁
       releaseLock(key);
-    }        
+    }
     return value;
   }
 
   @Override
   public Object removeObject(Object key) {
     // despite of its name, this method is called only to release locks
+
+    // 源码分析: 释放锁
     releaseLock(key);
     return null;
   }
@@ -119,9 +126,11 @@ public class BlockingCache implements Cache {
       lock.lock();
     }
   }
-  
+
+  // 源码分析: 释放锁
   private void releaseLock(Object key) {
     ReentrantLock lock = locks.get(key);
+    // 判断是否持有锁的线程
     if (lock.isHeldByCurrentThread()) {
       lock.unlock();
     }

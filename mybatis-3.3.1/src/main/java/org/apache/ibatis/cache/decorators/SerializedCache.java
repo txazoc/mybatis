@@ -33,7 +33,13 @@ import org.apache.ibatis.io.Resources;
  * @author Clinton Begin
  */
 
-// 源码解析: 序列化缓存, 要求value可序列化
+/**
+ * 序列化缓存
+ *
+ * 1) 要求value可序列化
+ * 2) put时, 对value进行序列化
+ * 3) get时, 对value进行反序列化
+ */
 public class SerializedCache implements Cache {
 
   private Cache delegate;
