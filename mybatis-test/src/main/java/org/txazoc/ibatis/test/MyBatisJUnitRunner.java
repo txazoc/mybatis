@@ -13,7 +13,6 @@ import java.lang.reflect.Method;
 
 public class MyBatisJUnitRunner extends BlockJUnit4ClassRunner {
 
-    private Class<?> testClass;
     private boolean isMyBatisTest = false;
     private Method setSqlSessionMethod;
 
@@ -23,11 +22,10 @@ public class MyBatisJUnitRunner extends BlockJUnit4ClassRunner {
     }
 
     private void initRunner(Class<?> clazz) {
-        testClass = clazz;
-        isMyBatisTest = MyBatisTest.class.isAssignableFrom(testClass);
+        isMyBatisTest = MyBatisTest.class.isAssignableFrom(clazz);
         if (isMyBatisTest) {
             try {
-                setSqlSessionMethod = testClass.getMethod("setSqlSession", SqlSession.class);
+                setSqlSessionMethod = clazz.getMethod("setSqlSession", SqlSession.class);
             } catch (Exception e) {
                 throw new MyBatisJUnitException("MyBatisJUnitRunner init failed", e);
             }

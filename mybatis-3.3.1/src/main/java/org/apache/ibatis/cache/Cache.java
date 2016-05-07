@@ -54,7 +54,7 @@ public interface Cache {
    * @param value The result of a select.
    */
 
-  // 源码解析: key-value放入缓存
+  // 源码解析: key/value放入缓存
   void putObject(Object key, Object value);
 
   /**
@@ -62,7 +62,7 @@ public interface Cache {
    * @return The object stored in the cache.
    */
 
-  // 源码解析: 根据key从缓存种获取value
+  // 源码解析: 根据key从缓存中获取value
   Object getObject(Object key);
 
   /**
@@ -96,7 +96,7 @@ public interface Cache {
    * @return The number of elements stored in the cache (not its capacity).
    */
 
-  // 源码解析: 缓存中存储的key-value数量
+  // 源码解析: 缓存中存储的key/value数量
   int getSize();
   
   /** 
